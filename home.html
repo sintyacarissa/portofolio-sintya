@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintya Carissa | Portofolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Quicksand', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            yellow: '#FFF6C3', // Kuning soft menyala (Butter Yellow)
+                            pink: '#FF7EA5',   // Pink pop pastel (Bubblegum Pink)
+                            lightPink: '#FFD6E0', // Latar card pink muda
+                            dark: '#4a4a4a',   // Text color
+                            accent: '#FFB3C6'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(255,126,165,0.25)',
+                        'float': '0 20px 40px -10px rgba(255,126,165,0.35)',
+                        'card': '0 8px 30px rgba(0,0,0,0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            color: #4a4a4a;
+            /* Gradasi kuning soft menyala ke pink pastel pop */
+            background: linear-gradient(120deg, #FFF8D6 0%, #FFE0E6 100%);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Motif Aesthetic (Kombinasi Grid Putih Lembut & Polkadot Pink) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(rgba(255, 126, 165, 0.25) 1.5px, transparent 1.5px),
+                linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+            background-size: 40px 40px, 20px 20px, 20px 20px;
+            background-position: 0 0, 10px 10px, 10px 10px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Blob Shape Animation */
+        .blob-shape {
+            animation: morph 8s ease-in-out infinite;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            transition: all 1s ease-in-out;
+        }
+
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* SPA Page Transition Animations */
+        .page-section {
+            display: none; /* Sembunyikan semua section secara default */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .page-section.active {
+            display: block; /* atau flex tergantung section */
+            animation: pageFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        main {
+            flex-grow: 1;
+            padding-top: 100px; /* Ruang untuk navbar sticky */
+            padding-bottom: 60px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-pastel-pink selection:text-white relative">
+
+    <nav class="glass-nav fixed w-full top-0 z-50 transition-all duration-300 shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center">
+            <a href="#beranda" class="text-2xl font-bold text-pastel-pink tracking-wide flex items-center gap-2 nav-brand">
+                <span class="text-3xl">💖</span> Sintya<span class="text-pastel-dark">.</span>
+            </a>
+            
+            <div class="flex gap-2 bg-white/60 px-4 py-2 rounded-full shadow-sm border border-white overflow-x-auto max-w-full">
+                <button data-target="beranda" class="nav-link px-4 py-2 rounded-full text-sm font-bold bg-pastel-pink text-white transition-all duration-300 whitespace-nowrap">Beranda</button>
+                <button data-target="tentang" class="nav-link px-4 py-2 rounded-full text-sm font-bold text-pastel-dark hover:bg-pastel-lightPink transition-all duration-300 whitespace-nowrap">Tentang</button>
+                <button data-target="keahlian" class="nav-link px-4 py-2 rounded-full text-sm font-bold text-pastel-dark hover:bg-pastel-lightPink transition-all duration-300 whitespace-nowrap">Keahlian</button>
+                <button data-target="proyek" class="nav-link px-4 py-2 rounded-full text-sm font-bold text-pastel-dark hover:bg-pastel-lightPink transition-all duration-300 whitespace-nowrap">Proyek</button>
+                <button data-target="kontak" class="nav-link px-4 py-2 rounded-full text-sm font-bold text-pastel-dark hover:bg-pastel-lightPink transition-all duration-300 whitespace-nowrap">Kontak</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 w-full flex flex-col justify-center items-center">
+        
+        <section id="beranda" class="page-section active w-full min-h-[70vh]">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center h-full">
+                <!-- Kolom Teks -->
+                <div class="order-2 lg:order-1 text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-pastel-lightPink text-pastel-pink font-bold text-sm mb-2">
+                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Menyukai tantangan baru
+                    </div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-pastel-dark">
+                        Merakit Logika <br>
+                        Menciptakan <span class="text-pastel-pink relative whitespace-nowrap">
+                            Karya
+                            <svg class="absolute w-full h-3 -bottom-1 left-0 text-pastel-lightPink -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0,5 Q50,15 100,5" stroke="currentColor" stroke-width="4" fill="none"/></svg>
+                        </span>
+                    </h1>
+                    <p class="text-lg text-gray-600 font-medium max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                        Halo! Aku <strong>Sintya Carissa</strong>. Siswi Kelas XII yang antusias merangkai kode menjadi web indah dan merakit perangkat keras menjadi sistem pintar.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-6">
+                        <button data-target="proyek" class="nav-link-btn bg-pastel-pink hover:bg-[#ff7f96] text-white px-8 py-4 rounded-full font-bold shadow-soft hover:shadow-float transform hover:-translate-y-1 transition-all duration-300">
+                            Eksplor Karya
+                        </button>
+                        <button data-target="tentang" class="nav-link-btn bg-white border-2 border-pastel-lightPink text-pastel-pink hover:bg-pastel-lightPink px-8 py-4 rounded-full font-bold transition-all duration-300">
+                            Lebih Lanjut
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kolom Foto (Bulat Sempurna) -->
+                <div class="order-1 lg:order-2 flex justify-center relative mt-10 lg:mt-0">
+                    <div class="absolute w-80 h-80 lg:w-96 lg:h-96 bg-pastel-lightPink blob-shape -z-10 mt-10 opacity-70 float-anim"></div>
+                    
+                    <div class="relative">
+                        <!-- FOTO PROFIL BULAT -->
+                        <img src="goblin imut.jpg" alt="Sintya Carissa" 
+                             onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&auto=format&fit=crop&q=80'"
+                             class="w-72 h-72 lg:w-80 lg:h-80 object-cover rounded-full border-8 border-white shadow-card z-10 hover:scale-105 transition-transform duration-500">
+                        
+                        <!-- Floating badges -->
+                        <div class="absolute -bottom-2 -left-6 bg-white p-4 rounded-2xl shadow-card border border-pastel-lightPink float-anim" style="animation-delay: 1s;">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-[#e0f7fa] flex items-center justify-center text-xl">💻</div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-bold">Keahlian</p>
+                                    <p class="text-sm font-bold text-pastel-dark">Web Dev</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-10 -right-8 bg-white p-4 rounded-2xl shadow-card border border-pastel-lightPink float-anim" style="animation-delay: 2s;">
+                             <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-[#fff4c2] flex items-center justify-center text-xl">🤖</div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-bold">Fokus</p>
+                                    <p class="text-sm font-bold text-pastel-dark">IoT System</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tentang" class="page-section w-full">
+            <div class="text-center mb-12">
+                <span class="text-pastel-pink font-bold tracking-wider uppercase text-sm mb-2 block">Mengenal Lebih Dekat</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-pastel-dark">Siapa Sintya?</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="md:col-span-2 bg-white p-8 md:p-10 rounded-[2.5rem] shadow-card border border-white hover:border-pastel-lightPink transition-colors">
+                    <div class="w-14 h-14 bg-pastel-lightPink text-pastel-pink rounded-2xl flex items-center justify-center text-2xl mb-6">👤</div>
+                    <h3 class="text-2xl font-bold text-pastel-dark mb-4">Pelajar & Tech Enthusiast</h3>
+                    <p class="text-gray-600 leading-relaxed text-lg mb-6">
+                        Berawal dari rasa penasaran tentang bagaimana aplikasi bekerja, saya terjun ke jurusan Rekayasa Perangkat Lunak. Saya suka memadukan desain visual yang indah dengan logika kode yang terstruktur untuk menciptakan karya yang tidak hanya berfungsi baik, tapi juga enak dipandang.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-4 py-2 bg-white/80 text-pastel-dark text-sm font-bold rounded-xl border border-white shadow-sm">Informatika</span>
+                        <span class="px-4 py-2 bg-white/80 text-pastel-dark text-sm font-bold rounded-xl border border-white shadow-sm">Problem Solving</span>
+                        <span class="px-4 py-2 bg-white/80 text-pastel-dark text-sm font-bold rounded-xl border border-white shadow-sm">Creative Thinking</span>
+                    </div>
+                </div>
+
+                <div class="bg-pastel-pink p-8 rounded-[2.5rem] shadow-soft text-white flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-6">🎯</div>
+                        <h3 class="text-xl font-bold mb-3">Visi Belajar</h3>
+                        <p class="text-white/90 leading-relaxed font-medium">
+                            Menjadi pengembang yang mampu menciptakan solusi teknologi yang tidak hanya canggih, tetapi juga membawa kegembiraan bagi penggunanya melalui estetika.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-card border border-white flex items-center gap-4">
+                    <div class="w-16 h-16 bg-[#e0f7fa] text-[#00acc1] rounded-full flex items-center justify-center text-2xl shrink-0">🎓</div>
+                    <div>
+                        <h4 class="font-bold text-pastel-dark text-lg">Kelas XII</h4>
+                        <p class="text-gray-500 text-sm">SMA 2 KOTA MOJOKERTO</p>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 bg-white p-8 rounded-[2.5rem] shadow-card border border-white flex flex-col justify-center">
+                    <p class="text-gray-500 font-bold mb-4">Tech Stack Harian:</p>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 flex items-center gap-2 border border-gray-100">
+                            <span class="text-orange-500">🛡️</span> HTML & CSS
+                        </div>
+                        <div class="px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 flex items-center gap-2 border border-gray-100">
+                            <span class="text-yellow-500">⚡</span> JavaScript
+                        </div>
+                        <div class="px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 flex items-center gap-2 border border-gray-100">
+                            <span class="text-teal-500">🌐</span> Cisco PT
+                        </div>
+                        <div class="px-5 py-3 bg-gray-50 rounded-2xl font-bold text-gray-700 flex items-center gap-2 border border-gray-100">
+                            <span class="text-blue-500">♾️</span> Arduino IDE
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="keahlian" class="page-section w-full">
+            <div class="text-center mb-12">
+                <span class="text-pastel-pink font-bold tracking-wider uppercase text-sm mb-2 block">Eksplorasi Mendalam</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-pastel-dark">Area Keahlian Khusus</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-[2rem] shadow-card border border-gray-50 hover:shadow-float transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-[#fff4c2] text-[#d4af37] rounded-[1.5rem] flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">🔌</div>
+                    <h3 class="text-xl font-bold text-pastel-dark mb-3">Hardware & Mikro</h3>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        Familiar dengan komponen elektronika dasar, perakitan mikrokontroler seperti Arduino Uno dan ESP32, serta mengintegrasikannya dengan berbagai sensor fisik.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2rem] shadow-card border border-gray-50 hover:shadow-float transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-pastel-lightPink text-pastel-pink rounded-[1.5rem] flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">🤖</div>
+                    <h3 class="text-xl font-bold text-pastel-dark mb-3">Sistem IoT</h3>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        Menghubungkan perangkat keras ke internet. Memprogram logika pengambilan data dan mengirimkannya ke server lokal atau cloud (Thingspeak / Blynk).
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-[2rem] shadow-card border border-gray-50 hover:shadow-float transition-all duration-300 group">
+                    <div class="w-16 h-16 bg-[#e0f7fa] text-[#00acc1] rounded-[1.5rem] flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">🌐</div>
+                    <h3 class="text-xl font-bold text-pastel-dark mb-3">Jaringan Dasar</h3>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        Merancang topologi jaringan, memahami subnetting IP (IPv4), melakukan konfigurasi router/switch dasar, dan pengujian konektivitas pada simulasi.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="proyek" class="page-section w-full">
+            <div class="text-center mb-12">
+                <span class="text-pastel-pink font-bold tracking-wider uppercase text-sm mb-2 block">Pameran Hasil Belajar</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-pastel-dark">Galeri Karya & Proyek</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mx-auto">
+                <!-- Proyek Besar -->
+                <div class="md:col-span-2 bg-white rounded-[2rem] p-4 shadow-card hover:shadow-float transition-all duration-300 group flex flex-col md:flex-row gap-6 border border-gray-50">
+                    <div class="md:w-1/2 h-64 bg-pastel-lightPink rounded-[1.5rem] relative overflow-hidden flex items-center justify-center">
+                        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(#ff9aab 2px, transparent 2px); background-size: 20px 20px;"></div>
+                        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm z-10 group-hover:scale-105 transition-transform text-center">
+                            <span class="text-5xl block mb-2">💻</span>
+                            <span class="font-bold text-pastel-pink">Web Portofolio</span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex flex-col justify-center p-4">
+                        <div class="flex gap-2 mb-4">
+                            <span class="px-3 py-1 bg-gray-100 text-xs font-bold text-gray-600 rounded-lg">Web Dev</span>
+                            <span class="px-3 py-1 bg-gray-100 text-xs font-bold text-gray-600 rounded-lg">Estetika</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-pastel-dark mb-3">SPA Portofolio Interaktif</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Proyek perancangan web portofolio pribadi bergaya <i>Single Page Application</i> menggunakan HTML, CSS, dan vanilla JavaScript. Fokus pada animasi transisi halus, tata letak bento-box, dan palet warna pastel yang memanjakan mata.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Proyek Kecil 1 -->
+                <div class="bg-white rounded-[2rem] p-4 shadow-card hover:shadow-float transition-all duration-300 group border border-gray-50">
+                    <div class="h-56 bg-[#fff7d6] rounded-[1.5rem] relative overflow-hidden flex items-center justify-center mb-6">
+                        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-sm group-hover:-translate-y-2 transition-transform">
+                            <span class="text-4xl">🌡️</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <h3 class="text-xl font-bold text-pastel-dark mb-2">Monitoring Suhu IoT</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Integrasi sensor suhu & kelembapan DHT11 dengan NodeMCU. Membaca data ruangan secara real-time dan menampilkannya pada antarmuka web server lokal.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Proyek Kecil 2 -->
+                <div class="bg-white rounded-[2rem] p-4 shadow-card hover:shadow-float transition-all duration-300 group border border-gray-50">
+                    <div class="h-56 bg-[#e0f7fa] rounded-[1.5rem] relative overflow-hidden flex items-center justify-center mb-6">
+                         <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-sm group-hover:-translate-y-2 transition-transform">
+                            <span class="text-4xl">🖥️</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <h3 class="text-xl font-bold text-pastel-dark mb-2">Topologi LAB Sekolah</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Simulasi desain dan perancangan jaringan LAN untuk laboratorium komputer sekolah menggunakan Cisco Packet Tracer dengan metode pengalamatan yang efisien.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontak" class="page-section w-full">
+            <div class="text-center mb-10">
+                <span class="text-pastel-pink font-bold tracking-wider uppercase text-sm mb-2 block">Mari Terhubung</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-pastel-dark">Kontak & Kolaborasi</h2>
+            </div>
+            
+            <!-- Container dengan Gradasi Kuning Menyala ke Pink + Motif Aesthetic -->
+            <div class="max-w-5xl mx-auto bg-gradient-to-br from-[#FFF6C3] via-[#FFE0E6] to-[#FFB3C6] rounded-[3rem] p-2 md:p-3 shadow-float relative overflow-hidden mt-4">
+                
+                <!-- Motif Aesthetic Tambahan (Titik Polkadot Estetik) -->
+                <div class="absolute inset-0 opacity-40 pointer-events-none" style="background-image: radial-gradient(#FF7EA5 2px, transparent 2px); background-size: 24px 24px;"></div>
+                
+                <!-- Elemen dekorasi background abstrak -->
+                <div class="absolute top-0 right-0 w-80 h-80 bg-white opacity-40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#FFF6C3] opacity-60 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
+
+                <!-- Glassmorphism Card -->
+                <div class="bg-white/50 backdrop-blur-md rounded-[2.5rem] p-8 md:p-12 border border-white/60 flex flex-col lg:flex-row gap-12 items-center relative z-10">
+                    
+                    <!-- Sisi Kiri: Teks & Kartu Info -->
+                    <div class="w-full lg:w-1/2 text-center lg:text-left">
+                        <div class="inline-block bg-white/70 p-4 rounded-[1.5rem] mb-6 shadow-sm border border-white">
+                            <span class="text-4xl">💌</span>
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 tracking-tight">Punya Ide Menarik?</h3>
+                        <p class="text-gray-700 text-lg mb-8 font-medium leading-relaxed">
+                            Saya sangat terbuka untuk berdiskusi tentang proyek teknologi, tugas sekolah, kolaborasi, atau sekadar bertukar sapa.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <!-- Kartu Email -->
+                            <a href="mailto:sintyacarissa@email.com" class="flex items-center gap-4 bg-white/80 backdrop-blur-sm p-4 rounded-2xl shadow-sm hover:shadow-md hover:bg-white transition-all group border border-white/50 hover:border-pastel-pink cursor-pointer">
+                                <div class="w-14 h-14 bg-[#ffe4e8] text-pastel-pink rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">✉️</div>
+                                <div class="text-left">
+                                    <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Kirim Email</p>
+                                    <p class="text-gray-800 font-bold text-sm sm:text-base">sintyacarissa@email.com</p>
+                                </div>
+                            </a>
+                            
+                            <!-- Kartu Instagram (Tautan Asli ke IG) -->
+                            <a href="stcarissa_.htm" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 bg-white/80 backdrop-blur-sm p-4 rounded-2xl shadow-sm hover:shadow-md hover:bg-white transition-all group border border-white/50 hover:border-pastel-pink cursor-pointer">
+                                <div class="w-14 h-14 bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shadow-sm">📸</div>
+                                <div class="text-left">
+                                    <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Follow Instagram</p>
+                                    <p class="text-gray-800 font-bold text-sm sm:text-base">@stcarissa_</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sisi Kanan: Form Estetik -->
+                    <div class="w-full lg:w-1/2">
+                        <div class="bg-white rounded-[2rem] p-8 shadow-card border border-white relative">
+                            <!-- Dekorasi Pin Kertas -->
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 bg-[#ffb7b2] rounded-full shadow-sm border-2 border-white/50"></div>
+                            
+                            <h4 class="text-xl font-bold text-pastel-dark mb-6 text-center mt-2">Tinggalkan Pesan</h4>
+                            
+                            <!-- Animasi JS untuk mengubah teks tombol agar tampak terkirim tanpa alert() -->
+                            <form class="space-y-5" onsubmit="event.preventDefault(); const btn = this.querySelector('button'); const ori = btn.innerHTML; btn.innerHTML = 'Terkirim! ✨'; btn.classList.remove('bg-pastel-pink', 'hover:bg-[#ff6a95]'); btn.classList.add('bg-green-400'); setTimeout(() => { btn.innerHTML = ori; btn.classList.remove('bg-green-400'); btn.classList.add('bg-pastel-pink', 'hover:bg-[#ff6a95]'); this.reset(); }, 3000);">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-500 mb-1.5 ml-2">Nama Kamu</label>
+                                    <input type="text" required placeholder="Cth: Nadin Amizah" class="w-full bg-white/90 border border-white rounded-2xl px-5 py-3.5 focus:outline-none focus:border-pastel-pink focus:ring-4 focus:ring-pastel-pink/30 transition-all font-medium text-gray-700 placeholder-gray-400 shadow-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-500 mb-1.5 ml-2">Pesanmu</label>
+                                    <textarea required rows="3" placeholder="Halo Sintya! Aku tertarik untuk..." class="w-full bg-white/90 border border-white rounded-2xl px-5 py-3.5 focus:outline-none focus:border-pastel-pink focus:ring-4 focus:ring-pastel-pink/30 transition-all resize-none font-medium text-gray-700 placeholder-gray-400 shadow-sm"></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-pastel-pink hover:bg-[#ff6a95] text-white font-bold py-4 rounded-2xl shadow-soft hover:shadow-float transition-all transform hover:-translate-y-1">
+                                    Kirim Pesan 🚀
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-pastel-lightPink mt-auto">
+        <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col items-center justify-center gap-4 text-center">
+            <div class="text-xl font-bold text-pastel-pink">
+                Sintya<span class="text-pastel-dark">.</span>
+            </div>
+            <p class="text-gray-400 font-medium text-sm">
+                Dirancang dan dikembangkan dengan <span class="text-pastel-pink">♥</span> oleh Sintya Carissa. &copy; 2026.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // SPA (Single Page Application) Logic Routing
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link, .nav-link-btn');
+            const sections = document.querySelectorAll('.page-section');
+            const navBrand = document.querySelector('.nav-brand');
+
+            // Fungsi untuk mengganti halaman aktif
+            function switchPage(targetId) {
+                // 1. Sembunyikan semua halaman
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // 2. Tampilkan halaman yang dituju
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    // Beri jeda sangat sedikit agar animasi CSS terpanggil ulang
+                    setTimeout(() => {
+                        targetSection.classList.add('active');
+                    }, 50);
+                }
+
+                // 3. Update status tombol navigasi (Warna aktif)
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.getAttribute('data-target') === targetId) {
+                        link.classList.remove('text-pastel-dark', 'hover:bg-pastel-lightPink');
+                        link.classList.add('bg-pastel-pink', 'text-white');
+                    } else {
+                        link.classList.remove('bg-pastel-pink', 'text-white');
+                        link.classList.add('text-pastel-dark', 'hover:bg-pastel-lightPink');
+                    }
+                });
+
+                // Scroll ke atas dengan mulus saat pindah halaman
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Event listener untuk tombol navigasi
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('data-target');
+                    switchPage(target);
+                });
+            });
+
+            // Event listener untuk logo (Kembali ke Beranda)
+            navBrand.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchPage('beranda');
+            });
+        });
+    </script>
+</body>
+</html>
